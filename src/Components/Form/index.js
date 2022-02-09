@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import "./styles.scss";
+import IndexacaoModal from "../Modal/indexacao";
+import RendimentoModal from "../Modal/rendimento";
 
 function Desafio() {
   const { handleSubmit, register } = useForm();
@@ -15,6 +17,18 @@ function Desafio() {
       .then((data) => setDados(data));
   }, []);
 
+  const [indexacaoModal, setIndexacaoModal] = useState(false);
+
+  function shownIndexacaoModal() {
+    setIndexacaoModal(!indexacaoModal);
+  }
+
+  const [rendimentoModal, setRendimentoModal] = useState(false);
+
+  function showRendimentoModal() {
+    setRendimentoModal(!rendimentoModal);
+  }
+
   return (
     <div className="wrapper">
       <div className="container">
@@ -26,7 +40,12 @@ function Desafio() {
               <div className="wrapper-up rendimento">
                 <div>
                   <span>Rendimento</span>
-                  <span>I</span>
+                  <span onClick={showRendimentoModal}>&#8520;</span>
+                  {rendimentoModal && (
+                    <RendimentoModal
+                      showRendimentoModal={showRendimentoModal}
+                    />
+                  )}
                 </div>
                 <div className="wrapper-radio-button">
                   <input
@@ -69,7 +88,10 @@ function Desafio() {
               <div className="wrapper-up indexacao">
                 <div>
                   <span>Tipo de indexação</span>
-                  <span>I</span>
+                  <span onClick={shownIndexacaoModal}>&#8520;</span>
+                  {indexacaoModal && (
+                    <IndexacaoModal shownIndexacaoModal={shownIndexacaoModal} />
+                  )}
                 </div>
                 <div className="wrapper-radio-button">
                   <input
