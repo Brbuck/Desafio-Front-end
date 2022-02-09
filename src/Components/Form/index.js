@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
+import "./styles.scss";
+
 import { useForm } from "react-hook-form";
 
-import "./styles.scss";
 import IndexacaoModal from "../Modal/indexacao";
 import RendimentoModal from "../Modal/rendimento";
+import Simulacao from "../Simulacao";
 
 function Desafio() {
   const { handleSubmit, register } = useForm();
 
   const [dados, setDados] = useState([]);
-  const onSubmit = (data) => console.log(data);
 
   useEffect(() => {
     fetch("http://localhost:3000/indicadores")
@@ -29,12 +30,22 @@ function Desafio() {
     setRendimentoModal(!rendimentoModal);
   }
 
+  const [investimento, setInvestimento] = useState([]);
+
+  async function getDados({ rendimento, indexacao }) {
+    const response = await fetch(
+      `http://localhost:3000/simulacoes/?tipoIndexacao=${indexacao}&tipoRendimento=${rendimento}`
+    );
+    const data = await response.json();
+    setInvestimento(data);
+  }
+
   return (
     <div className="wrapper">
       <div className="container">
         <h1>Simulador de Investimentos</h1>
         <div className="container-content">
-          <form className="form" onSubmit={handleSubmit(onSubmit)}>
+          <form className="form" onSubmit={handleSubmit(getDados)}>
             <div className="container-simulacao">
               <h2>Simulação</h2>
               <div className="wrapper-up rendimento">
@@ -139,6 +150,7 @@ function Desafio() {
               </button>
             </div>
           </form>
+          <Simulacao investimento={investimento} />
         </div>
       </div>
     </div>
