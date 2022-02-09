@@ -1,0 +1,160 @@
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: #fff;
+    padding: 30px 30px 80px;
+
+    .container {
+        width: 100%;
+        height: auto;
+        background-color: #e5e5e5;
+        padding: 30px;
+
+        h1 {
+            text-align: center;
+        }
+
+        .container-content {
+            display: grid;
+            grid-template-columns: 2fr 3fr;
+            align-items: center;
+            column-gap: 10px;
+
+            @media screen and (max-width: 956px) {
+                grid-template-columns: 1fr;
+            }
+
+            .form {
+                width: 100%;
+                //height: 100%;
+                padding: 10px;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
+
+                @media screen and (max-width: 566px) {
+                    flex-direction: column;
+                }
+
+                .container-simulacao {
+                    width: 100%;
+                    height: 100%;
+                    padding: 10px;
+
+                    .wrapper-up {
+                        div {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin: 10px 0px;
+
+                            span + span{
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                width: 15px;
+                                height: 15px;
+                                font-size: 10px;
+                                border-radius: 50%;
+                                border: 1px solid #222;
+                                cursor: pointer;
+                            }
+                        }
+
+                        .wrapper-radio-button {
+                            input {
+                                display: none;
+
+                                &:checked + label {
+                                    background-color: #ff8329;
+                                    color: #fff;
+                                    background-image: url("https://img.icons8.com/external-tal-revivo-duo-tal-revivo/25/000000/external-select-checkmark-symbol-to-choose-true-answer-basic-duo-tal-revivo.png");
+                                    background-repeat: no-repeat;
+                                    background-position: calc(6px);
+                                    background-size: 13px;
+                                }
+                            }
+
+                            input + label {
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                cursor: pointer;
+
+                                //padding: 10px calc(15% + 2px);
+                                width: 100%;
+                                height: 35px;
+                                font-size: 12px;
+                                border-radius: 10px 0px 0px 10px;
+                                border: 1px solid #222;
+                                //margin: 0;
+                                background-color: #fff;
+                                color: #111;
+                            }
+
+                            #liquido + label,
+                            #ipca + label {
+                                border-radius: 0px 10px 10px 0px;
+                            }
+
+                            #pos + label {
+                                border-radius: 0px;
+                            }
+                        }
+                    }
+
+                    .inputs {
+                        div {
+                            display: flex;
+                            flex-direction: column;
+                            margin: 15px 0px;
+
+                            label {
+                                margin: 10px 0px;
+                            }
+
+                            input {
+                                border-bottom: 1px solid #222;
+                                padding: 8px 0px;
+                            }
+                        }
+                    }
+
+                    .button {
+                        width: 100%;
+                        height: 40px;
+                        border: 1px solid #111;
+                        border-radius: 10px;
+                        margin-top: 20px;
+                        cursor: pointer;
+                        font-weight: 600;
+                    }
+
+                    .simular {
+                        background-color: #ff8329;
+                        border: none;
+                    }
+
+                    .rendimento {
+                        padding-right: 30px;
+                        @media screen and (max-width: 566px) {
+                            padding: 0;
+                        }
+                    }
+
+                    .indexacao {
+                        padding-left: 30px;
+                        @media screen and (max-width: 566px) {
+                            padding: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.erro {
+    margin-top: 5px;;
+    color: red;
+}
