@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./styles.scss";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema, formatarMoeda, soNumero } from "./schema";
 
 import { useForm } from "react-hook-form";
 
@@ -8,7 +10,11 @@ import RendimentoModal from "../Modal/rendimento";
 import Simulacao from "../Simulacao";
 
 function Desafio() {
-  const { handleSubmit, register } = useForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
 
   const [dados, setDados] = useState([]);
 
@@ -50,7 +56,7 @@ function Desafio() {
               <h2>Simulação</h2>
               <div className="wrapper-up rendimento">
                 <div>
-                  <span>Rendimento</span>
+                  <span className={errors.rendimento ? "erro" : null}>Rendimento</span>
                   <span onClick={showRendimentoModal}>&#8520;</span>
                   {rendimentoModal && (
                     <RendimentoModal
@@ -76,15 +82,36 @@ function Desafio() {
                   />
                   <label htmlFor="liquido">Liquido</label>
                 </div>
+                <p className={errors.rendimento ? "erro" : null}>
+                  {errors.rendimento?.message}
+                </p>
               </div>
               <div className="inputs rendimento">
                 <div>
-                  <label>Aporte Inicial</label>
-                  <input type="text" {...register("aporteInicial")} />
+                  <label className={errors.aporteInicial ? "erro" : null}>
+                    Aporte Inicial
+                  </label>
+                  <input
+                    type="text"
+                    {...register("aporteInicial")}
+                    onKeyUp={formatarMoeda}
+                  />
+                  <p className={errors.aporteInicial ? "erro" : null}>
+                    {errors.aporteInicial?.message}
+                  </p>
                 </div>
                 <div>
-                  <label> Prazo (em meses) </label>
-                  <input type="text" {...register("prazo")} />
+                  <label className={errors.prazo ? "erro" : null}>
+                    Prazo (em meses)
+                  </label>
+                  <input
+                    type="text"
+                    {...register("prazo")}
+                    onKeyUp={soNumero}
+                  />
+                  <p className={errors.prazo ? "erro" : null}>
+                    {errors.prazo?.message}
+                  </p>
                 </div>
                 <div>
                   <label> IPCA (ao ano) </label>
@@ -92,13 +119,13 @@ function Desafio() {
                 </div>
               </div>
               <button className="button " type="reset">
-                Limpar Campos{" "}
+                Limpar Campos
               </button>
             </div>
             <div className="container-simulacao ">
               <div className="wrapper-up indexacao">
                 <div>
-                  <span>Tipo de indexação</span>
+                  <span className={errors.indexacao ? "erro" : null}>Tipo de indexação</span>
                   <span onClick={shownIndexacaoModal}>&#8520;</span>
                   {indexacaoModal && (
                     <IndexacaoModal shownIndexacaoModal={shownIndexacaoModal} />
@@ -130,15 +157,31 @@ function Desafio() {
                   />
                   <label htmlFor="ipca">Fixado</label>
                 </div>
+                <p className={errors.indexacao ? "erro" : null}>
+                  {errors.indexacao?.message}
+                </p>
               </div>
               <div className="inputs indexacao">
                 <div>
                   <label> Aporte Mensal </label>
-                  <input type="text" {...register("aporteMensal")} />
+                  <input
+                    type="text"
+                    {...register("aporteMensal")}
+                    onKeyUp={formatarMoeda}
+                  />
                 </div>
                 <div>
-                  <label> Rentabilidade </label>
-                  <input type="text" {...register("rentabilidade")} />
+                  <label className={errors.rentabilidade ? "erro" : null}>
+                    Rentabilidade
+                  </label>
+                  <input
+                    type="text"
+                    {...register("rentabilidade")}
+                    onKeyUp={soNumero}
+                  />
+                  <p className={errors.rentabilidade ? "erro" : null}>
+                    {errors.rentabilidade?.message}
+                  </p>
                 </div>
                 <div>
                   <label> CDI (ao ano) </label>
@@ -146,7 +189,7 @@ function Desafio() {
                 </div>
               </div>
               <button className="button simular" type="submit">
-                Simular{" "}
+                Simular
               </button>
             </div>
           </form>
