@@ -1,5 +1,4 @@
 import React from 'react'
-
 import './styles.scss'
 
 function Ultimo({ investimento }) {
@@ -19,7 +18,7 @@ function Ultimo({ investimento }) {
                         </div>
                         <div className="card">
                             <span>Valor pago em IR</span>
-                            <p>R$ {item?.valorPagoIR}</p>
+                            <span>R$ {item?.valorspanagoIR}</span>
                         </div>
                         <div className="card">
                             <span>Valor Final Liquido</span>

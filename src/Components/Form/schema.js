@@ -1,5 +1,7 @@
 import * as yup from "yup";
 
+//validação de campos dos inputs requeridos
+
 export const schema = yup
   .object({
     indexacao: yup.mixed().required("Campo é obrigatório"),
@@ -13,6 +15,8 @@ export const schema = yup
   })
   .required();
 
+// Função para aceitar apenas números no input
+
 export function soNumero(e) {
   let value = e.target.value;
   value = value.replace(/\D/g, "");
@@ -20,6 +24,8 @@ export function soNumero(e) {
   e.currentTarget.value = value;
   return e;
 }
+
+// Função para formatar entrada do input em moeda
 
 export function formatarMoeda(e) {
   let value = e.target.value;
@@ -30,5 +36,3 @@ export function formatarMoeda(e) {
   e.currentTarget.value = value;
   return e;
 }
-
-

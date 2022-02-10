@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./styles.scss";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { schema, formatarMoeda, soNumero } from "./schema";
 
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { schema, formatarMoeda, soNumero } from "./schema";
 
 import IndexacaoModal from "../Modal/indexacao";
 import RendimentoModal from "../Modal/rendimento";
@@ -16,34 +16,41 @@ function Desafio() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const [dados, setDados] = useState([]);
+  const [indicadores, setIndicadores] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:3000/indicadores")
       .then((res) => res.json())
-      .then((data) => setDados(data));
+      .then((data) => setIndicadores(data));
   }, []);
 
+  // Modal do tipo de indexação
   const [indexacaoModal, setIndexacaoModal] = useState(false);
 
   function shownIndexacaoModal() {
     setIndexacaoModal(!indexacaoModal);
   }
 
+  // Modal do Rendimento
   const [rendimentoModal, setRendimentoModal] = useState(false);
 
   function showRendimentoModal() {
     setRendimentoModal(!rendimentoModal);
   }
 
+  // Função de requisição dos dados ao backend
   const [investimento, setInvestimento] = useState([]);
 
   async function getDados({ rendimento, indexacao }) {
-    const response = await fetch(
-      `http://localhost:3000/simulacoes/?tipoIndexacao=${indexacao}&tipoRendimento=${rendimento}`
-    );
-    const data = await response.json();
-    setInvestimento(data);
+    try {
+      const response = await fetch(
+        `http://localhost:3000/simulacoes/?tipoIndexacao=${indexacao}&tipoRendimento=${rendimento}`
+      );
+      const data = await response.json();
+      setInvestimento(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
@@ -56,7 +63,9 @@ function Desafio() {
               <h2>Simulação</h2>
               <div className="wrapper-up rendimento">
                 <div>
-                  <span className={errors.rendimento ? "erro" : null}>Rendimento</span>
+                  <span className={errors.rendimento ? "erro" : null}>
+                    Rendimento
+                  </span>
                   <span onClick={showRendimentoModal}>&#8520;</span>
                   {rendimentoModal && (
                     <RendimentoModal
@@ -115,7 +124,7 @@ function Desafio() {
                 </div>
                 <div>
                   <label> IPCA (ao ano) </label>
-                  <input type="text" value={dados[1]?.valor + "%"} readOnly />
+                  <input type="text" value={indicadores[1]?.valor + "%"} readOnly />
                 </div>
               </div>
               <button className="button " type="reset">
@@ -125,7 +134,9 @@ function Desafio() {
             <div className="container-simulacao ">
               <div className="wrapper-up indexacao">
                 <div>
-                  <span className={errors.indexacao ? "erro" : null}>Tipo de indexação</span>
+                  <span className={errors.indexacao ? "erro" : null}>
+                    Tipo de indexação
+                  </span>
                   <span onClick={shownIndexacaoModal}>&#8520;</span>
                   {indexacaoModal && (
                     <IndexacaoModal shownIndexacaoModal={shownIndexacaoModal} />
@@ -185,7 +196,7 @@ function Desafio() {
                 </div>
                 <div>
                   <label> CDI (ao ano) </label>
-                  <input type="text" value={dados[0]?.valor + "%"} readOnly />
+                  <input type="text" value={indicadores[0]?.valor + "%"} readOnly />
                 </div>
               </div>
               <button className="button simular" type="submit">
