@@ -60,7 +60,7 @@ function Desafio() {
         <div className="container-content">
           <form className="form" onSubmit={handleSubmit(getDados)}>
             <div className="container-simulacao">
-              <h2>Simulação</h2>
+              <h2>Simulador</h2>
               <div className="wrapper-up rendimento">
                 <div>
                   <span className={errors.rendimento ? "erro" : null}>
@@ -135,7 +135,7 @@ function Desafio() {
               <div className="wrapper-up indexacao">
                 <div>
                   <span className={errors.indexacao ? "erro" : null}>
-                    Tipo de indexação
+                    Tipos de indexação
                   </span>
                   <span onClick={shownIndexacaoModal}>&#8520;</span>
                   {indexacaoModal && (

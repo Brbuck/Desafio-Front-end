@@ -11,7 +11,7 @@ export const schema = yup
       .string("somente numeros")
       .max(2, "máximo 99 meses")
       .required("Campo é obrigatório"),
-    rentabilidade: yup.string().required("Campo é obrigatório"),
+    rentabilidade: yup.string().required("Campo é obrigatório").max(2, "máximo 99%"),
   })
   .required();
 
